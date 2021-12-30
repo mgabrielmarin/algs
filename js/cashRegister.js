@@ -27,7 +27,6 @@ function checkCashRegister(price, cash, cid) {
     let returnMoney = 0;
     let bill = cid[i][1]/arrCurrency[i][1];
     bill.toFixed(2);
-    console.log(bill);
     while(difference.toFixed(2)>=arrCurrency[i][1] && bill>=1){
       difference -= arrCurrency[i][1];
       returnMoney += arrCurrency[i][1];
@@ -45,6 +44,29 @@ function checkCashRegister(price, cash, cid) {
     }
   }
 
+  let sumResult = 0;
+  for(let i = 0; i < cid.length; ++i) {
+    sumResult += result[i][1];
+  }
+  sumResult = sumResult.toFixed(2);
+
+  if(cidSum < originalDiff || sumResult < originalDiff){
+    objectReturn.status = 'INSUFFICIENT_FUNDS';
+  } else if(cidSum == originalDiff){
+    objectReturn.status = 'CLOSED';
+    objectReturn.change = cid;
+  }else{
+    let resultFiltered = [];
+    for(let a=0; a<result.length; ++a){
+      if(result[a][1]!==0){
+        resultFiltered.push(result[a]);
+      }
+    }
+    objectReturn.status = 'OPEN';
+    objectReturn.change = resultFiltered;
+  }
+  console.log(objectReturn);
+  return objectReturn;
 }
 
-checkCashRegister(19.5, 20, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]]);
+checkCashRegister(19.5, 20, [["PENNY", 0.5], ["NICKEL", 0], ["DIME", 0], ["QUARTER", 0], ["ONE", 0], ["FIVE", 0], ["TEN", 0], ["TWENTY", 0], ["ONE HUNDRED", 0]])
