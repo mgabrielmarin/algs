@@ -6,6 +6,7 @@ Practice...Shh please...
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdbool.h>
 
 typedef struct node 
 {
@@ -23,6 +24,7 @@ void addLinkedListTail(node *head, int val); // add node to tail;
 void addLinkedListAtIndex(node *head, int val, int index); // after index
 void deleteLinkedListAtIndex(node *head, int index);
 void deleteLinkedList(node *head); // delete all the nodes
+bool hasCycle(node *head); // check if linkedList has a cycle;
 
 int main(int argc, char **argv)
 {
@@ -36,6 +38,7 @@ int main(int argc, char **argv)
   printLinkedList(head);
   addLinkedListAtIndex(head, 4, 2); 
   printLinkedList(head);
+  printf("%d\n",hasCycle(head));
   deleteLinkedListAtIndex(head, 3);
   printLinkedList(head);
   deleteLinkedList(head);
@@ -145,4 +148,19 @@ void deleteLinkedList(node *head)
     iter->next = iter->next->next;
     free(tmp);
   }
+}
+
+bool hasCycle(node *head)
+{
+  if(!head || !head->next)
+    return false;
+  node *slow = head->next, *fast = head->next->next;
+  while (fast && fast->next)
+  {
+    if(slow == fast)
+      return true;
+    slow = slow->next;
+    fast = fast->next->next;
+  }
+  return false;
 }
