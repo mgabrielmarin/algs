@@ -24,7 +24,8 @@ void addLinkedListTail(node *head, int val); // add node to tail;
 void addLinkedListAtIndex(node *head, int val, int index); // after index
 void deleteLinkedListAtIndex(node *head, int index);
 void deleteLinkedList(node *head); // delete all the nodes
-bool hasCycle(node *head); // check if linkedList has a cycle;
+bool hasCycle(node *head); // detect if linked list has cycle
+node *detectCycle(node *head); // return cycle first node else return NULL;
 
 int main(int argc, char **argv)
 {
@@ -77,7 +78,7 @@ node *createLinkedList()
 void printLinkedList(node *head)
 {
   node *iter = head;
-  while(iter)
+  while(iter && !hasCycle(head)) // print only if there is not a cycle
   {
     printf("%d -> ",iter->val);
     iter = iter->next;
@@ -164,3 +165,28 @@ bool hasCycle(node *head)
   }
   return false;
 }
+
+node *detectCycle(node *head)
+{
+  // check if list has mininum 2 nodes
+  if (head == NULL || head->next == NULL) return NULL;
+  node *curr, *slow, *fast;
+  curr = slow = fast = head;
+  // check if we have a cycle
+  while(fast->next && fast->next->next)
+  {
+    slow = slow->next;
+    fast = fast->next->next;
+    if(slow == fast) // if we have a cycle
+    {
+      while(slow != curr) // find where cycle starts
+      {
+        curr = curr->next;
+        slow = slow->next;
+      }
+      return curr;
+    }
+  }
+  return NULL;
+}
+
