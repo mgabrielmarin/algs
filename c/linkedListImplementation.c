@@ -23,6 +23,7 @@ void addLinkedListHead(node *head, int val); // add node after head;
 void addLinkedListTail(node *head, int val); // add node to tail;
 void addLinkedListAtIndex(node *head, int val, int index); // after index
 void deleteLinkedListAtIndex(node *head, int index);
+void deleteLinkedListNthElemAtEnd(node *head, int n);
 void deleteLinkedList(node *head); // delete all the nodes
 bool hasCycle(node *head); // detect if linked list has cycle
 node *detectCycle(node *head); // return cycle first node else return NULL;
@@ -39,11 +40,13 @@ int main(int argc, char **argv)
   printLinkedList(head);
   addLinkedListAtIndex(head, 4, 2); 
   printLinkedList(head);
-  printf("%d\n",hasCycle(head));
   deleteLinkedListAtIndex(head, 3);
+  printLinkedList(head);
+  deleteLinkedListNthElemAtEnd(head, 1);
   printLinkedList(head);
   deleteLinkedList(head);
   printLinkedList(head);
+  printf("%d\n",hasCycle(head));
 
   return 0;
 }
@@ -137,6 +140,28 @@ void deleteLinkedListAtIndex(node *head, int index)
       free(tmp);
     }
   }
+}
+
+void deleteLinkedListNthElemAtEnd(node *head, int n)
+{
+  node *tmp, *tmp2, *iter;
+  tmp = tmp2 = iter = head;
+  for(int i = 0; i < n; i += 1)
+    iter = iter->next;
+  if(!iter) 
+  {
+    tmp = head;
+    head = head->next; 
+    free(tmp);
+  }
+  while(iter->next)
+  {
+    iter = iter->next;
+    tmp = tmp->next;
+  }
+  tmp2 = tmp->next;
+  tmp->next = tmp->next->next;
+  free(tmp2);
 }
 
 void deleteLinkedList(node *head)
