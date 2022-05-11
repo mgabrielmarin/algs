@@ -28,6 +28,7 @@ void deleteLinkedList(node *head); // delete all the nodes
 bool hasCycle(node *head); // detect if linked list has cycle
 node *detectCycle(node *head); // return cycle first node else return NULL;
 node *reverseLinkedList(node *head);
+void oddEvenIndexesSortList(node *head);
 
 int main(int argc, char **argv)
 {
@@ -41,6 +42,9 @@ int main(int argc, char **argv)
   printLinkedList(head);
   addLinkedListAtIndex(head, 4, 2); 
   printLinkedList(head);
+  oddEvenIndexesSortList(head);
+  printLinkedList(head);
+  printf("Sorted odd indexes from even...\n");
   node *newHead = reverseLinkedList(head);
   printLinkedList(newHead);
   printf("Reversed...\n");
@@ -232,3 +236,19 @@ node *reverseLinkedList(node *head)
   }
   return prev;
 }
+
+void oddEvenIndexesSortList(node *head)
+{
+  if (head == NULL) return;
+  node *odd, *even, *evenHead;
+  odd = head, even = evenHead = head->next; 
+  while(even && even->next)
+  {
+    odd->next = odd->next->next;
+    even->next = even->next->next;
+    odd = odd->next;
+    even = even->next;
+  }
+  odd->next = evenHead;
+}
+
