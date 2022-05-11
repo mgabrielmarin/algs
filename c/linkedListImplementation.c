@@ -27,6 +27,7 @@ void deleteLinkedListNthElemAtEnd(node *head, int n);
 void deleteLinkedList(node *head); // delete all the nodes
 bool hasCycle(node *head); // detect if linked list has cycle
 node *detectCycle(node *head); // return cycle first node else return NULL;
+node *reverseLinkedList(node *head);
 
 int main(int argc, char **argv)
 {
@@ -40,13 +41,16 @@ int main(int argc, char **argv)
   printLinkedList(head);
   addLinkedListAtIndex(head, 4, 2); 
   printLinkedList(head);
-  deleteLinkedListAtIndex(head, 3);
-  printLinkedList(head);
-  deleteLinkedListNthElemAtEnd(head, 1);
-  printLinkedList(head);
-  deleteLinkedList(head);
-  printLinkedList(head);
-  printf("%d\n",hasCycle(head));
+  node *newHead = reverseLinkedList(head);
+  printLinkedList(newHead);
+  printf("Reversed...\n");
+  deleteLinkedListAtIndex(newHead, 3);
+  printLinkedList(newHead);
+  deleteLinkedListNthElemAtEnd(newHead, 1);
+  printLinkedList(newHead);
+  deleteLinkedList(newHead);
+  printLinkedList(newHead);
+  printf("%d\n",hasCycle(newHead));
 
   return 0;
 }
@@ -215,3 +219,16 @@ node *detectCycle(node *head)
   return NULL;
 }
 
+node *reverseLinkedList(node *head)
+{
+  node *prev = NULL, *curr, *foll; 
+  curr = foll = head;
+  while(curr)
+  {
+    foll = foll->next;
+    curr->next = prev;
+    prev = curr;
+    curr = foll;
+  }
+  return prev;
+}
