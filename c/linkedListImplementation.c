@@ -29,6 +29,7 @@ bool hasCycle(node *head); // detect if linked list has cycle
 node *detectCycle(node *head); // return cycle first node else return NULL;
 node *reverseLinkedList(node *head);
 void oddEvenIndexesSortList(node *head);
+bool isPalindrome(node *head);
 
 int main(int argc, char **argv)
 {
@@ -42,6 +43,7 @@ int main(int argc, char **argv)
   printLinkedList(head);
   addLinkedListAtIndex(head, 4, 2); 
   printLinkedList(head);
+  printf("%d\n", isPalindrome(head));
   oddEvenIndexesSortList(head);
   printLinkedList(head);
   printf("Sorted odd indexes from even...\n");
@@ -252,3 +254,28 @@ void oddEvenIndexesSortList(node *head)
   odd->next = evenHead;
 }
 
+bool isPalindrome(node *head)
+{
+  if (head == NULL) return NULL;
+  int maxStack = 0;
+  node *iter = head;
+  while(iter) // find linked list len
+  {
+    iter = iter->next;
+    maxStack += 1;
+  }
+  iter = head;
+  int stack[maxStack];
+  for(int i = maxStack-1; i >= 0; i -= 1) // put elements in stack
+  {
+    stack[i] = iter->val;
+    iter = iter->next;
+  }
+  iter = head;
+  for(int i = 0; i < maxStack; i += 1)
+  {
+    if (stack[i] != iter->val) return false;
+    iter = iter->next;
+  }
+  return true;
+}
