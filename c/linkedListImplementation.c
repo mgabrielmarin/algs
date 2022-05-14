@@ -30,6 +30,7 @@ node *detectCycle(node *head); // return cycle first node else return NULL;
 node *reverseLinkedList(node *head);
 void oddEvenIndexesSortList(node *head);
 bool isPalindrome(node *head);
+node *mergeTwoLinkedLists(node *list1, node *list2);
 
 int main(int argc, char **argv)
 {
@@ -58,6 +59,20 @@ int main(int argc, char **argv)
   printLinkedList(newHead);
   printf("%d\n",hasCycle(newHead));
 
+  // Merge two linked List testing
+  node *head1 = createNode(1);
+  node *head2 = createNode(2);
+  
+  addLinkedListTail(head1, 3);
+  addLinkedListTail(head1, 5);
+  addLinkedListTail(head2, 4);
+  addLinkedListTail(head2, 6);
+  printf("Two linked list before merging\n");
+  printLinkedList(head1);
+  printLinkedList(head2);
+  node *headMergedLists = mergeTwoLinkedLists(head1, head2);
+  printLinkedList(headMergedLists);
+  
   return 0;
 }
 
@@ -278,4 +293,29 @@ bool isPalindrome(node *head)
     iter = iter->next;
   }
   return true;
+}
+
+node *mergeTwoLinkedLists(node *list1, node *list2)
+{
+  if(list1 == NULL && list2 == NULL) return NULL;
+  node head;
+  node *headRef = &head;
+  while(list1 && list2) {
+    if(list1->val < list2->val) {
+      headRef->next = list1;
+      list1 = list1->next;
+      headRef = headRef->next;
+    } else {
+      headRef->next = list2;
+      list2 = list2->next;
+      headRef = headRef->next;
+    }
+  }
+  if(list1) {
+    headRef->next = list1;
+  }
+    if(list2) {
+    headRef->next = list2;
+  }
+  return head.next;
 }
