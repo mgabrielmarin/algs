@@ -31,6 +31,7 @@ node *reverseLinkedList(node *head);
 void oddEvenIndexesSortList(node *head);
 bool isPalindrome(node *head);
 node *mergeTwoLinkedLists(node *list1, node *list2);
+node *addTwoNumbers(node *list1, node *list2);
 
 int main(int argc, char **argv)
 {
@@ -59,7 +60,7 @@ int main(int argc, char **argv)
   printLinkedList(newHead);
   printf("%d\n",hasCycle(newHead));
 
-  // Merge two linked List testing
+  // Merge and add two linked List testing
   node *head1 = createNode(1);
   node *head2 = createNode(2);
   
@@ -67,9 +68,15 @@ int main(int argc, char **argv)
   addLinkedListTail(head1, 5);
   addLinkedListTail(head2, 4);
   addLinkedListTail(head2, 6);
-  printf("Two linked list before merging\n");
+  printf("Two linked Lists\n");
   printLinkedList(head1);
   printLinkedList(head2);
+
+  printf("Linked List after adding\n");
+  node *headSumLists = addTwoNumbers(head1, head2);
+  printLinkedList(headSumLists);
+
+  printf("Linked List after merging\n");
   node *headMergedLists = mergeTwoLinkedLists(head1, head2);
   printLinkedList(headMergedLists);
   
@@ -318,4 +325,27 @@ node *mergeTwoLinkedLists(node *list1, node *list2)
     headRef->next = list2;
   }
   return head.next;
+}
+
+node *addTwoNumbers(node *list1, node *list2)
+{
+  node sumHead;
+  node *sumHeadRef = &sumHead;
+  int adder = 0;
+  while(list1 || list2 || adder) {
+    if(list1) {
+      adder += list1->val;
+      list1 = list1->next;
+    }
+    if(list2) {
+      adder += list2->val;
+      list2 = list2->next;
+    }
+    sumHeadRef = sumHeadRef->next = (node *)malloc(sizeof(node));
+    sumHeadRef->val = adder % 10;
+    adder = adder / 10;
+  }
+  sumHeadRef->next = NULL;
+  
+  return sumHead.next;
 }
