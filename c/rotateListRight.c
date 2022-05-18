@@ -69,8 +69,9 @@ Node *rotateRight(Node *head, int totalRot)
   }
   curr->next = head; // link list in a cyrcle
   lastNodeIndex = totalNodes - (totalRot % (totalNodes + 1));
-  while(lastNodeIndex -= 1) {
+  while(lastNodeIndex) {
     head = head->next;
+    lastNodeIndex -= 1;
   }
   curr = head;
   head = head->next;
