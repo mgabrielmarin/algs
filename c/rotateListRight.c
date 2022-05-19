@@ -79,10 +79,3 @@ Node *rotateRight(Node *head, int totalRot)
   return head;
 }
 
-
-
-
-
-
-
-
