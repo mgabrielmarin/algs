@@ -35,7 +35,7 @@ int main(int argc, char **argv)
   printStack(root);
   pop(rootRef);
   printStack(root);
-  
+
   return 0;
 }
 
@@ -91,3 +91,4 @@ void printStack(sNode *root)
   }
   printf("\n");
 }
+
