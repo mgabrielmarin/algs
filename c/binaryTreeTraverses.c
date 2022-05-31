@@ -25,6 +25,7 @@ StackNode *createStackNode(TreeNode *tNode);
 void push(StackNode **topRef, TreeNode *tNode);
 TreeNode *pop(StackNode **topRef);
 bool isEmpty(StackNode *top);
+TreeNode *peek(StackNode *top);
 
 // Int Stack implementation
 void printStack(int *arrTrav, int len);
@@ -55,45 +56,6 @@ void inOrderStackTraversalPrint(TreeNode *root, int *retSize);
 
 // iterative without stack Morris Traversal
 
-int main(int argc, char **argv)
-{
-  TreeNode *root = createTreeNode(1);
-  root->left = createTreeNode(2);
-  root->right = createTreeNode(3);
-  printf("Print tree in different orders\n");
-  printTreePreOrder(root);
-  printTreeInOrder(root);
-  printTreePostOrder(root);
-  printf("\n");
-  printf("The number of nodes in tree is %d\n", nodeCount(root));
-  // Traversals
-  int len = nodeCount(root);
-  int *arrTrav; 
-  int *retSize = (int *)malloc(sizeof(int));
-  // Recursive
-  printf("Recursive\n");
-  // preOrder
-  arrTrav = preOrderTraversal(root, retSize);
-  printf("preOrder: ");
-  printStack(arrTrav, len);
- // inOrder
-  arrTrav = inOrderTraversal(root, retSize);
-  printf("inOrder: ");
-  printStack(arrTrav, len);
-  // postOrder
-  arrTrav = postOrderTraversal(root, retSize);
-  printf("postOrder: ");
-  printStack(arrTrav, len);
-  // Iterative with stack
-  printf("Iterative\n");
-  // inOrder
-  arrTrav = inOrderStackTraversal(root, retSize);
-  printf("inOrderStack: ");
-  printStack(arrTrav, len);
- 
-  return 0;
-}
-
 // TreeNode Stack functions implementation
 StackNode *createStackNode(TreeNode *tNode)
 {
@@ -123,6 +85,12 @@ TreeNode *pop(StackNode **topRef)
 bool isEmpty(StackNode *top)
 {
   return (top == NULL) ? 1 : 0;
+}
+
+TreeNode *peek(StackNode *top)
+{
+  if(top == NULL) return NULL;
+  return top->tNode;
 }
 
 // Int stack functions implementation
@@ -286,5 +254,85 @@ int *inOrderStackTraversal(TreeNode *root, int *retSize)
   *retSize = 0;
   inOrderStack(root, result, retSize);
   return result;
+}
+
+void postOrderStack(TreeNode *root, int *res, int *size)
+{
+  TreeNode *curr = root;  
+  StackNode *stack = NULL;
+
+  do {
+    while(curr) {
+      if(curr->right)
+        push(&stack, curr->right);
+      push(&stack, curr);
+      curr = curr->left;
+    }
+    curr = pop(&stack);
+    if(curr->right && curr->right == peek(stack)) {
+      pop(&stack);
+      push(&stack, curr);
+      curr = curr->right;
+    } else {
+      res[(*size)++] = curr->val;
+      curr = NULL;
+    }
+  } while(!isEmpty(stack));
+}
+
+int *postOrderStackTraversal(TreeNode *root, int *retSize)
+{
+  int len = nodeCount(root);
+  int *result = (int *)malloc(sizeof(int)*len+1);
+  *retSize = 0;
+  postOrderStack(root, result, retSize);
+  return result;
+}
+
+int main(int argc, char **argv)
+{
+  TreeNode *root = createTreeNode(1);
+  root->left = createTreeNode(2);
+  root->right = createTreeNode(3);
+  printf("Print tree in different orders\n");
+  printTreePreOrder(root);
+  printTreeInOrder(root);
+  printTreePostOrder(root);
+  printf("\n");
+  printf("The number of nodes in tree is %d\n", nodeCount(root));
+  // Traversals
+  int len = nodeCount(root);
+  int *arrTrav; 
+  int *retSize = (int *)malloc(sizeof(int));
+  // Recursive
+  printf("Recursive\n");
+  // preOrder
+  arrTrav = preOrderTraversal(root, retSize);
+  printf("preOrder: ");
+  printStack(arrTrav, len);
+ // inOrder
+  arrTrav = inOrderTraversal(root, retSize);
+  printf("inOrder: ");
+  printStack(arrTrav, len);
+  // postOrder
+  arrTrav = postOrderTraversal(root, retSize);
+  printf("postOrder: ");
+  printStack(arrTrav, len);
+  // Iterative with stack
+  printf("Iterative\n");
+  // preOrder
+  arrTrav = preOrderStackTraversal(root, retSize);
+  printf("preOrderStack: ");
+  printStack(arrTrav, len);
+  // inOrder
+  arrTrav = inOrderStackTraversal(root, retSize);
+  printf("inOrderStack: ");
+  printStack(arrTrav, len);
+  // postOrder
+  arrTrav = postOrderStackTraversal(root, retSize);
+  printf("postOrderStack: ");
+  printStack(arrTrav, len);
+
+  return 0;
 }
 
