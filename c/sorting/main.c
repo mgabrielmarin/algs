@@ -23,5 +23,13 @@ int main(int argc, char *argv[])
   free(arr);
   printf("\n");
 
+  printf("Selection_Sort:\n");
+  arr = Rand_Arr(len);
+  Print_Arr(arr, len); 
+  Selection_Sort(arr, len);
+  Print_Arr(arr, len); 
+  free(arr);
+  printf("\n");
+
   return 0;
 }

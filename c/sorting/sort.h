@@ -16,3 +16,14 @@ void Insertion_Sort(int arr[], int len) {
     arr[j+1] = key;
   }
 }
+
+void Selection_Sort(int arr[], int len) {
+  for(int i = 0; i < len - 1; ++i) {
+    int min_idx = i;
+    for(int j = i + 1; j < len; ++j)
+      if(arr[j] < arr[min_idx])
+        min_idx = j;
+    if(min_idx != i)
+      Swap(&(arr[min_idx]), &(arr[i]));
+  }
+}
