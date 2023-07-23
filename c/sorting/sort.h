@@ -27,3 +27,13 @@ void Selection_Sort(int arr[], int len) {
       Swap(&(arr[min_idx]), &(arr[i]));
   }
 }
+
+void Merge_Sort(int arr[], int l, int r)
+{
+  if(l < r) {
+    int m = l + (r - l) / 2;
+    Merge_Sort(arr, l, m);
+    Merge_Sort(arr, m + 1, r);
+    Merge(arr, l, m, r);
+  }
+}
