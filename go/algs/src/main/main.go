@@ -2,25 +2,28 @@ package main
 
 import(
   "fmt"
-  "algs/sorting/bubble_sort"
-  "algs/sorting/insertion_sort"
-  "algs/sorting/selection_sort"
+  "algs/lib/sort"
   "algs/util"
 )
 
 func main() {
   arr := rand_arr.Rand_Arr(10)
   fmt.Println(arr);
-  bubble.Sort(arr);
+  sort.Bubble(arr);
   fmt.Println(arr);
 
   arr = rand_arr.Rand_Arr(10)
   fmt.Println(arr);
-  insertion.Sort(arr);
+  sort.Insertion(arr);
   fmt.Println(arr);
 
   arr = rand_arr.Rand_Arr(10)
   fmt.Println(arr);
-  selection.Sort(arr);
+  sort.Selection(arr);
+  fmt.Println(arr);
+  
+  arr = rand_arr.Rand_Arr(10)
+  fmt.Println(arr);
+  sort.Merge(arr, 0, len(arr)-1);
   fmt.Println(arr);
 }
