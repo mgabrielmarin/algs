@@ -21,4 +21,9 @@ func main() {
   fmt.Println(arr);
   sort.Selection(arr);
   fmt.Println(arr);
+
+  arr = randarr.RandArr(10)
+  fmt.Println(arr);
+  arr = sort.Merge(arr);
+  fmt.Println(arr);
 }
