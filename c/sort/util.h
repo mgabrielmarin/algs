@@ -1,8 +1,14 @@
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 #include <time.h>
 
-void Swap(int *x, int *y) {
+typedef struct tree {
+    int          val;
+    struct tree* left;
+    struct tree* right;
+} tree;
+
+void Swap(int* x, int* y) {
   int tmp = *x;
   *x = *y;
   *y = tmp;
@@ -62,3 +68,31 @@ void Merge(int arr[], int l, int m, int r)
     ++k;
   }
 }
+
+tree* newtree(int val) {
+    tree* tmp = malloc(sizeof(tree));
+    tmp->val = val;
+    tmp->left = tmp->right = NULL;
+    return tmp;
+}
+
+tree* add(tree* t, int val) {
+    if (t == NULL) {
+        return newtree(val);
+    }
+    if (val < t->val) {
+        t->left = add(t->left, val);
+    } else {
+        t->right = add(t->right, val);
+    }
+    return t;
+}
+
+void printInOrder(int arr[], tree* t) {
+    if (t != NULL) {
+        printInOrder(arr, t->left);
+        printf("%d ", t->val);
+        printInOrder(arr, t->right);
+    }
+}
+

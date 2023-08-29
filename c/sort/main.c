@@ -30,11 +30,18 @@ int main(int argc, char *argv[])
   free(arr);
   printf("\n");
 
-  printf("Merge_Sort:\n");
+  printf("MergeSort:\n");
   arr = Rand_Arr(len);
   Print_Arr(arr, len); 
-  Merge_Sort(arr, 0, len - 1);
+  MergeSort(arr, 0, len - 1);
   Print_Arr(arr, len); 
+  free(arr);
+  printf("\n");
+
+  printf("TreeSort:\n");
+  arr = Rand_Arr(len);
+  Print_Arr(arr, len); 
+  TreeSort(arr, len); // only prints, array stays the same :(
   free(arr);
   printf("\n");
 

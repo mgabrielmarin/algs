@@ -28,12 +28,19 @@ void Selection_Sort(int arr[], int len) {
   }
 }
 
-void Merge_Sort(int arr[], int l, int r)
-{
+void MergeSort(int arr[], int l, int r) {
   if(l < r) {
     int m = l + (r - l) / 2;
-    Merge_Sort(arr, l, m);
-    Merge_Sort(arr, m + 1, r);
+    MergeSort(arr, l, m);
+    MergeSort(arr, m + 1, r);
     Merge(arr, l, m, r);
   }
+}
+
+void TreeSort(int arr[], int len) {
+    tree* root = NULL;
+    for (int i = 0; i < len; i++) {
+        root = add(root, arr[i]);
+    }
+    printInOrder(arr, root);
 }
