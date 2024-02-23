@@ -1,5 +1,6 @@
 package sort 
 
+// Selection Sort
 func Selection(arr []int)[]int {
   for i := 0; i < len(arr) - 1; i++ {
     min_idx := i
